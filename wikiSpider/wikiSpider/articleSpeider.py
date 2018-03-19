@@ -16,11 +16,10 @@ class ArticleSpieder(Spider):
                   callback="parse_item", follow=True)]
 
     
-    def parse(self, response):
+    def parse_item(self, response):
         item = Article()
-        title = response.xpath('//h1/text()')[0].extract()
-        print("Title is: "+title)
-        item['title'] = title
+        item['title'] = response.xpath('//h1/text()')[0].extract()
+        item['link'] = response.xpath('//a/@href').extract()
         return item
 
     
